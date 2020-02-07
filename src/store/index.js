@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import moment from 'moment';
-import { path, join, keys, map } from 'rambda';
+import { path, join, keys, map, isEmpty, without } from 'rambda';
 
 import restApi from '../api';
 
@@ -31,6 +31,8 @@ export default new Vuex.Store({
     }),
     rates: state => state.rates,
     error: state => state.error,
+    base: state => state.base,
+    selected: state => state.selected,
   },
   mutations: {
     setData(state, { type, data }) {
@@ -42,50 +44,63 @@ export default new Vuex.Store({
       type: 'date',
       data: moment(data).format('YYYY-MM-DD'),
     }),
-    updateSelected: ({ commit }, data) => commit('setData', {
+    updateSelected: ({ commit, getters }, data) => commit('setData', {
       type: 'selected',
-      data,
+      data: without([getters.base], data),
     }),
-    updateBase: ({ commit }, data) => commit('setData', {
-      type: 'base',
-      data,
-    }),
+    updateBase: ({ commit, getters }, data) => {
+      commit('setData', {
+        type: 'base',
+        data,
+      });
+      commit('setData', {
+        type: 'selected',
+        data: without(data, getters.selected),
+      });
+    },
     async fetchRates({ commit, getters }) {
       commit('setData', {
         type: 'error',
         data: null,
-      })
-      const res = await restApi(
-        path('filteredData.date', getters),
-        {
-          base: path('filteredData.base', getters),
-          symbols: join(',', path('filteredData.selected', getters)),
-        }
-      );
-      if (res.error) {
+      });
+      if (isEmpty(path('filteredData.selected', getters))) {
         commit('setData', {
           type: 'rates',
           data: null,
         });
-        commit('setData', {
-          type: 'error',
-          data: path('error.message', res),
-        });
       } else {
-        const { rates, ...rest } = res;
-        commit('setData', {
-          type: 'rates',
-          data: {
-            ...rest,
-            rates: map(
-              key => ({
-                currency: key,
-                value: rates[key],
-              }),
-              keys(rates)
-            ),
-          },
-        });
+        const res = await restApi(
+          path('filteredData.date', getters),
+          {
+            base: path('filteredData.base', getters),
+            symbols: join(',', path('filteredData.selected', getters)),
+          }
+        );
+        if (res.error) {
+          commit('setData', {
+            type: 'rates',
+            data: null,
+          });
+          commit('setData', {
+            type: 'error',
+            data: res.message,
+          });
+        } else {
+          const { rates, ...rest } = res;
+          commit('setData', {
+            type: 'rates',
+            data: {
+              ...rest,
+              rates: map(
+                key => ({
+                  currency: key,
+                  value: rates[key],
+                }),
+                keys(rates)
+              ),
+            },
+          });
+        }
       }
     }
   },

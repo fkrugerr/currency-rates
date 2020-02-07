@@ -58,3 +58,12 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.typo {
+  &__label {
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+}
+</style>

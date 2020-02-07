@@ -30,6 +30,7 @@
         <div class="row">
           <div class="col-100 my-1">
             <span v-if="error">{{ error }}</span>
+            <span v-if="!error && !rates">No Data!</span>
             <app-table v-if="rates" :date="rates.date" :rows="rates.rates" />
           </div>
         </div>
@@ -47,10 +48,10 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import { equals } from 'rambda';
 
 import AppHero from './AppHero.vue';
 import AppTable from './AppTable.vue';
-import EuroIcon from '../icons/Euro';
 import SelectField from '../lib/SelectField';
 import DatePicker from '../lib/DatePicker';
 
@@ -58,7 +59,6 @@ export default {
   name: `AppHome`,
   components: {
     AppHero,
-    EuroIcon,
     SelectField,
     DatePicker,
     AppTable,
@@ -71,6 +71,13 @@ export default {
   },
   created() {
     this.fetchRates();
+  },
+  watch: {
+    filteredData(next, prev) {
+      if (!equals(next, prev)) {
+        this.fetchRates();
+      }
+    },
   },
 };
 </script>
@@ -95,9 +102,17 @@ export default {
 }
 .col-60 {
   @include layout__item(0.6);
+  @media (max-width: 769px) {
+    @include layout__item(1);
+    order: 1;
+  }
 }
 .col-40 {
   @include layout__item(0.4);
+  @media (max-width: 769px) {
+    @include layout__item(1);
+    order: 0;
+  }
 }
 .col-50 {
   @include layout__item(0.5);

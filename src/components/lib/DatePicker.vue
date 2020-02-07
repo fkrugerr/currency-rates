@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="$options.name">
     <datepicker :value="value" :inline="true" :id="id" @input="handler" />
   </div>
 </template>
@@ -8,6 +8,7 @@
 import Datepicker from 'vuejs-datepicker';
 
 export default {
+  name: 'DatePicker',
   components: { Datepicker },
   props: {
     id: {
@@ -25,23 +26,28 @@ export default {
 
 <style lang="scss">
 @import '../../scss/settings/color';
-.vdp-datepicker {
-  &__calendar {
-    border-radius: 5px;
-    border: 1px solid #e8e8e8 !important;
-    margin-top: 15px;
-    .cell.selected {
-      background: $color-primary !important;
-      color: #ffffff;
-      &:hover {
-        border: 1px solid $color-primary !important;
-        background: $color-primary !important;
-      }
-    }
-    .cell:not(.blank):not(.disabled).day {
+
+.DatePicker {
+  .vdp-datepicker {
+    &__calendar {
       border-radius: 5px;
-      &:hover {
-        border: 1px solid $color-primary !important;
+      border: 1px solid #e8e8e8;
+      margin-top: 24px;
+      width: 100%;
+      max-width: 300px;
+      .cell.selected {
+        background: $color-primary;
+        color: #ffffff;
+        &:hover {
+          border: 1px solid $color-primary;
+          background: $color-primary;
+        }
+      }
+      .cell:not(.blank):not(.disabled).day {
+        border-radius: 5px;
+        &:hover {
+          border: 1px solid $color-primary;
+        }
       }
     }
   }

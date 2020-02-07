@@ -2,7 +2,7 @@
   <img
     svg-inline
     class="icon"
-    src="../../assets/icons/dollar.svg"
-    alt="dollar"
+    src="../../assets/icons/sterling.svg"
+    alt="sterling"
   />
 </template>

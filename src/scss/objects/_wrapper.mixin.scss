@@ -1,6 +1,6 @@
 $o-wrapper-sizes: (
-  s: 42em,
-  m: 56em
+  s: 960px,
+  m: 1024px
 );
 
 @mixin wrapper($size: m) {
