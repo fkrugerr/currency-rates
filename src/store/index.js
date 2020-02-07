@@ -13,9 +13,12 @@ const initialState = {
   date: moment().format('YYYY-MM-DD'),
   currencies,
   base: currencies[0],
-  selected: [currencies[1]],
+  selected: [],
   rates: null,
   error: null,
+  disabledDates: {
+    from: new Date(),
+  },
 }
 
 export default new Vuex.Store({
@@ -33,6 +36,7 @@ export default new Vuex.Store({
     error: state => state.error,
     base: state => state.base,
     selected: state => state.selected,
+    disabledDates: state => state.disabledDates,
   },
   mutations: {
     setData(state, { type, data }) {

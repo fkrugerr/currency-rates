@@ -1,6 +1,12 @@
 <template>
   <div :class="$options.name">
-    <datepicker :value="value" :inline="true" :id="id" @input="handler" />
+    <datepicker
+      :value="value"
+      :inline="true"
+      :id="id"
+      @input="handler"
+      :disabled-dates="disabledDates"
+    />
   </div>
 </template>
 
@@ -19,6 +25,10 @@ export default {
     handler: {
       type: Function,
       required: true,
+    },
+    disabledDates: {
+      type: Object,
+      default: {},
     },
   },
 };

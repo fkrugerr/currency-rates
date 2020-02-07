@@ -40,6 +40,7 @@
           :value="filteredData.date"
           :handler="updateDate"
           id="dates"
+          :disabledDates="disabledDates"
         />
       </div>
     </div>
@@ -64,7 +65,13 @@ export default {
     AppTable,
   },
   computed: {
-    ...mapGetters(['currencies', 'filteredData', 'rates', 'error']),
+    ...mapGetters([
+      'currencies',
+      'filteredData',
+      'rates',
+      'error',
+      'disabledDates',
+    ]),
   },
   methods: {
     ...mapActions(['updateDate', 'updateSelected', 'updateBase', 'fetchRates']),
