@@ -59,7 +59,7 @@ export default new Vuex.Store({
       });
       commit('setData', {
         type: 'selected',
-        data: without(data, getters.selected),
+        data: without([data], getters.selected),
       });
     },
     async fetchRates({ commit, getters }) {
