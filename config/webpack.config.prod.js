@@ -8,7 +8,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const helpers = require('./helpers');
 const commonConfig = require('./webpack.config.common');
 const isProd = process.env.NODE_ENV === 'production';
-const environment = isProd ? require('./env/prod.env') : require('./env/staging.env');
+const environment = isProd ? require('./env/prod.env') : require('./env/dev.env');
 
 const webpackConfig = merge(commonConfig, {
 	mode: 'production',
