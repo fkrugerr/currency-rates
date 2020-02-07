@@ -1,13 +1,13 @@
 <template>
   <div :class="$options.name">
     <slot name="header">
-      <app-header/>
+      <app-header />
     </slot>
     <main :class="`${$options.name}__main`">
-      <slot/>
+      <slot />
     </main>
     <slot name="footer">
-      <app-footer/>
+      <app-footer />
     </slot>
   </div>
 </template>

@@ -21,6 +21,9 @@ export default {
   padding-bottom: 1em;
   background-color: $color-secondary;
   text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 
   &__wrapper {
     @include wrapper();
