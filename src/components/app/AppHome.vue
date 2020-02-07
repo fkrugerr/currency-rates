@@ -92,11 +92,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../scss/objects/layout.mixin';
 .AppHome {
-  $section-spacing: 3em;
-
-  &__teaserList {
-    margin-top: $section-spacing;
-  }
+  -webkit-font-smoothing: antialiased;
 }
 .my-1 {
   margin: 1rem 0;
