@@ -19,6 +19,7 @@ const initialState = {
   disabledDates: {
     from: new Date(),
   },
+  loading: false,
 }
 
 export default new Vuex.Store({
@@ -37,6 +38,7 @@ export default new Vuex.Store({
     base: state => state.base,
     selected: state => state.selected,
     disabledDates: state => state.disabledDates,
+    loading: state => state.loading,
   },
   mutations: {
     setData(state, { type, data }) {
@@ -73,6 +75,10 @@ export default new Vuex.Store({
           data: null,
         });
       } else {
+        commit('setData', {
+          type: 'loading',
+          data: true,
+        });
         const res = await restApi(
           path('filteredData.date', getters),
           {
@@ -105,6 +111,10 @@ export default new Vuex.Store({
             },
           });
         }
+        commit('setData', {
+          type: 'loading',
+          data: false,
+        });
       }
     }
   },

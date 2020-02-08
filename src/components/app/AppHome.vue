@@ -31,7 +31,12 @@
           <div class="col-100 my-1">
             <span v-if="error">{{ error }}</span>
             <span v-if="!error && !rates">No Data!</span>
-            <app-table v-if="rates" :date="rates.date" :rows="rates.rates" />
+            <app-table
+              v-if="rates"
+              :date="rates.date"
+              :rows="rates.rates"
+              :loading="loading"
+            />
           </div>
         </div>
       </div>
@@ -71,13 +76,11 @@ export default {
       'rates',
       'error',
       'disabledDates',
+      'loading',
     ]),
   },
   methods: {
     ...mapActions(['updateDate', 'updateSelected', 'updateBase', 'fetchRates']),
-  },
-  created() {
-    this.fetchRates();
   },
   watch: {
     filteredData(next, prev) {
