@@ -19,7 +19,7 @@
   "homepage": "https://github.com/fkrugerr/currency-rates",
   "dependencies": {
     "@babel/polyfill": "~7.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "moment": "^2.24.0",
     "rambda": "^4.5.0",
     "vue": "~2.6",
